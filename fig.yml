@@ -1,0 +1,46 @@
+#
+#     server1:1883 ----------------+
+#      | pub                       |
+#      |  +-- server2:1883 -----+  |
+#      |  | pub                 |  |
+#      |  |                     |  |
+#      |  |                 sub |  | sub
+#     redismaster:6379         redisslave:6379
+#
+##
+## MQTT server
+##
+server1:
+  build: .
+  ports:
+    - "1883:1883"
+  links:
+    - redismaster:redismaster
+    - redisslave:redisslave
+
+server2:
+  build: .
+  ports:
+    - "2883:1883"
+  links:
+    - redismaster:redismaster
+    - redisslave:redisslave
+
+##
+## Redis
+##
+redismaster:
+  image: redis
+  command: redis-server /etc/redis.conf
+  volumes:
+    - ./redis-master.conf:/etc/redis.conf:ro
+  ports:
+    - "6379:6379"
+
+redisslave:
+  image: redis
+  command: redis-server /etc/redis.conf
+  volumes:
+    - ./redis-slave.conf:/etc/redis.conf:ro
+  links:
+    - redismaster:master
