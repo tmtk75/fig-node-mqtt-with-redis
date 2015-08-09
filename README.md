@@ -5,11 +5,13 @@
 - two processes of node-mqtt run
 
 ## Getting Started
-Open three terminals.
+Open four terminals.
 ```
 [0]$ fig up
 
-[1]$ make sub
+[1]$ make sub1
 
-[2]$ make pub
+[2]$ make sub2
+
+[3]$ make pub
 ```

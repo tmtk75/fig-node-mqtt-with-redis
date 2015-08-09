@@ -1,6 +1,9 @@
 ## pub/sub
-sub:
+sub1:
 	node sub.js mqtt://`boot2docker ip 2>/dev/null`:1883
+
+sub2:
+	node sub.js mqtt://`boot2docker ip 2>/dev/null`:2883
 
 pub:
 	node pub.js mqtt://`boot2docker ip 2>/dev/null`:2883
